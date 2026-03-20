@@ -7,7 +7,11 @@ import { generateDefinition } from './definition';
 const SRC_DIR = resolve('src');
 const DIST_DIR = resolve('dist');
 
-const processFiles = async (pattern: string, subDir: string, filter?: (file: string) => boolean) => {
+const processFiles = async (
+    pattern: string,
+    subDir: string,
+    filter?: (file: string) => boolean,
+) => {
     const files = await FastGlob(pattern, {
         cwd: SRC_DIR,
         absolute: true,

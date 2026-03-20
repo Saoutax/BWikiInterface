@@ -123,6 +123,7 @@ pnpm run deploy
 ```
 
 部署脚本会自动：
+
 1. 构建项目（如果尚未构建）
 2. 计算文件哈希值，检测变化
 3. 仅上传有变化的文件到 MediaWiki
@@ -134,19 +135,19 @@ pnpm run deploy
 
 ### 可用命令
 
-| 命令 | 描述 |
-|------|------|
-| `pnpm run build` | 构建项目到 `dist/` 目录 |
-| `pnpm run deploy` | 构建并部署到 BWiki |
-| `pnpm run format` | 使用 Prettier 格式化代码 |
-| `pnpm run lint:dev` | 使用 ESLint 检查代码 |
+| 命令                | 描述                     |
+| ------------------- | ------------------------ |
+| `pnpm run build`    | 构建项目到 `dist/` 目录  |
+| `pnpm run deploy`   | 构建并部署到 BWiki       |
+| `pnpm run format`   | 使用 Prettier 格式化代码 |
+| `pnpm run lint:dev` | 使用 ESLint 检查代码     |
 
 ### 环境变量
 
-| 变量名 | 必填 | 描述 |
-|--------|------|------|
-| `SESSDATA` | 是 | BWiki 登录 Cookie 中的 SESSDATA 值 |
-| `USERAGENT` | 是 | 用于 API 请求的 User-Agent 字符串 |
+| 变量名      | 必填 | 描述                               |
+| ----------- | ---- | ---------------------------------- |
+| `SESSDATA`  | 是   | BWiki 登录 Cookie 中的 SESSDATA 值 |
+| `USERAGENT` | 是   | 用于 API 请求的 User-Agent 字符串  |
 
 ## 故障排除
 
