@@ -1,16 +1,7 @@
-import { Mwn } from 'mwn';
 import process from 'node:process';
 import minimist from 'minimist';
 import { build } from './build';
 import { deploy } from './deploy';
-import { SESSDATA, apiUrl, userAgent } from './config';
-
-const bot = new Mwn({
-    apiUrl,
-    userAgent,
-});
-
-bot.cookieJar.setCookie(`SESSDATA=${SESSDATA}`, apiUrl);
 
 const run = async () => {
     try {

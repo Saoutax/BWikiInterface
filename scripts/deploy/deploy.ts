@@ -2,23 +2,23 @@ import { Mwn } from 'mwn';
 import { SESSDATA, apiUrl, userAgent } from '.././config';
 import { contentHash, needDeploy } from './utils';
 
-const bot = new Mwn({
-    apiUrl,
-    userAgent,
-    maxRetries: 20,
-});
-
-bot.cookieJar.setCookie(`SESSDATA=${SESSDATA}`, apiUrl);
-
-const oldDeploymentJson = async (): Promise<Record<string, string> | Record<string, never>> => {
-    const data = await bot.read('MediaWiki:Deployment.json', {
-        rvprop: ['content'],
-    });
-    const content = 'missing' in data ? '' : (data.revisions?.[0]?.content ?? '');
-    return content ? JSON.parse(content) : {};
-};
-
 const deploy = async () => {
+    const bot = new Mwn({
+        apiUrl,
+        userAgent,
+        maxRetries: 20,
+    });
+
+    bot.cookieJar.setCookie(`SESSDATA=${SESSDATA}`, apiUrl);
+
+    const oldDeploymentJson = async (): Promise<Record<string, string> | Record<string, never>> => {
+        const data = await bot.read('MediaWiki:Deployment.json', {
+            rvprop: ['content'],
+        });
+        const content = 'missing' in data ? '' : (data.revisions?.[0]?.content ?? '');
+        return content ? JSON.parse(content) : {};
+    };
+
     const oldDeploy = await oldDeploymentJson(),
         currentDeploy = await contentHash(),
         deployment = needDeploy(oldDeploy, currentDeploy);
