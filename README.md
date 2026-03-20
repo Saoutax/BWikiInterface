@@ -15,6 +15,7 @@
 ```
 efficient-interface/
 ├── src/                          # 源代码目录（需要手动创建）
+│   ├── types/                    # 类型定义
 │   ├── gadgets/                  # 小工具代码
 │   │   └── [gadget-name]/        # 每个小工具独立目录
 │   │       ├── definition.yaml   # 小工具定义文件

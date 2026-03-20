@@ -43,7 +43,15 @@ export default defineConfig([
     },
 
     {
-        files: ['**/*.js'],
+        files: ['src/**/*.js'],
+        languageOptions: {
+            globals: {
+                ...globals.browser,
+                $: 'readonly',
+                mw: 'readonly',
+                OO: 'readonly',
+            },
+        },
     },
 
     ...tseslint.configs.recommended,
