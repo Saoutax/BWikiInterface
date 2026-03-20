@@ -10,7 +10,9 @@
         "default",
         "type",
         "rights",
-        "dependencies"
+        "dependencies",
+        "enable",
+        "files"
     ],
     "properties": {
         "ResourceLoader": {
@@ -62,6 +64,24 @@
                 "examples": ["mediawiki.api", "mediawiki.user"]
             },
             "examples": [["mediawiki.api", "mediawiki.user"]]
+        },
+        "enable": {
+            "type": "boolean",
+            "default": true,
+            "title": "是否启用",
+            "examples": [false, true]
+        },
+        "files": {
+            "type": "array",
+            "default": [],
+            "title": "小工具文件名称，不带Gadget-前缀",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+                "type": "string",
+                "title": "每个文件一个元素"
+            },
+            "examples": [["CleanDeleteReasons.js"]]
         }
     },
     "default": {
@@ -70,7 +90,9 @@
         "default": false,
         "type": "general",
         "rights": [],
-        "dependencies": []
+        "dependencies": [],
+        "enable": true,
+        "files": []
     },
     "examples": [
         {
@@ -79,7 +101,9 @@
             "default": true,
             "type": "general",
             "rights": ["delete"],
-            "dependencies": ["mediawiki.api", "mediawiki.user"]
+            "dependencies": ["mediawiki.api", "mediawiki.user"],
+            "enable": true,
+            "files": ["CleanDeleteReasons.js"]
         }
     ]
 }
