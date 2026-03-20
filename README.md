@@ -49,7 +49,7 @@ cd BWikiInterface
 pnpm install
 ```
 
-2. 配置环境变量：
+3. 配置环境变量：
 
 复制 `.env.example` 为 `.env` 并填写你的配置：
 
@@ -64,9 +64,11 @@ SESSDATA=你的SESSDATA
 USERAGENT=你的User-Agent
 ```
 
-3. 配置 Github Actions
-
 前往对应仓库的设置页面，添加与本地相同的 `SESSDATA` 和 `USERAGENT` 作为 `secret`
+
+4. 修改项目设置
+
+根据注释，修改 [`config.ts`](./scripts/config.ts) 中的设置
 
 ### 创建小工具
 
