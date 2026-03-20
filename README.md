@@ -1,6 +1,6 @@
 # Efficient Interface - BWiki 界面代码库
 
-一个用于 BWiki（MediaWiki）的界面代码构建和部署工具。支持代码编译、小工具定义生成和 Github Action 自动化部署。
+一个用于 BWiki（MediaWiki）的界面代码构建和部署工具。支持代码编译、小工具定义生成和 Github Actions 自动化部署。
 
 ## 功能特性
 
@@ -40,7 +40,8 @@ efficient-interface/
 
 ### 安装
 
-1. 克隆项目并安装依赖：
+1. 克隆本项目
+2. 安装依赖：
 
 ```bash
 git clone git@github.com:Saoutax/BWikiInterface.git
@@ -62,6 +63,10 @@ cp .env.example .env
 SESSDATA=你的SESSDATA
 USERAGENT=你的User-Agent
 ```
+
+3. 配置 Github Actions
+
+前往对应仓库的设置页面，添加与本地相同的 `SESSDATA` 和 `USERAGENT` 作为 `secret`
 
 ### 创建小工具
 
@@ -121,7 +126,7 @@ pnpm run deploy
 3. 仅上传有变化的文件到 MediaWiki
 4. 更新部署状态文件 `MediaWiki:Deployment.json`
 
-一般情况下，此部分将由 Github Action 完成，无需手动部署。
+一般情况下，此部分将由 Github Actions 完成，无需手动部署。
 
 ## 开发指南
 
