@@ -23,7 +23,7 @@ const deploy = async () => {
         currentDeploy = await contentHash(),
         deployment = needDeploy(oldDeploy, currentDeploy);
     await bot.batchOperation(Object.entries(deployment), async ([title, content]) =>
-        bot.save(title, content, 'Git commit', { tags: 'Bot', bot: true }),
+        bot.save(title, content, 'Git commit', { bot: true }),
     );
     await bot.save(
         'MediaWiki:Deployment.json',
@@ -32,7 +32,6 @@ const deploy = async () => {
         ),
         'Update deployment status',
         {
-            tags: 'Bot',
             bot: true,
         },
     );
