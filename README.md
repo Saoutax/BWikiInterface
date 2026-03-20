@@ -54,7 +54,10 @@ pnpm install
 复制 `.env.example` 为 `.env` 并填写你的配置：
 
 ```bash
-cp .env.example .env
+# Windows
+copy .env.example .env
+# Linux/macOS
+# cp .env.example .env
 ```
 
 编辑 `.env` 文件：
@@ -75,7 +78,10 @@ USERAGENT=你的User-Agent
 1. 在 `src/gadgets/` 目录下创建小工具目录：
 
 ```bash
-mkdir -p src/gadgets/MyGadget
+# Windows
+mkdir src\gadgets\MyGadget
+# Linux/macOS
+# mkdir -p src/gadgets/MyGadget
 ```
 
 2. 创建小工具定义文件 `src/gadgets/MyGadget/definition.yaml`：
@@ -102,10 +108,16 @@ console.log('MyGadget loaded!');
 
 ### 创建全局脚本
 
-与小工具类似，但应于`src/global/` 目录下按目标页面名称直接创建：
+与小工具类似，但应于`src/global/` 目录下按目标页面名称直接创建文件（例如 `Group-sysop.js`）：
 
 ```bash
-mkdir -p src/global/Group-sysop.js
+# Windows - 创建目录（如果不存在）
+mkdir src\global
+# 然后在 src\global\ 目录下创建 JavaScript 文件
+
+# Linux/macOS - 创建目录（如果不存在）
+# mkdir -p src/global
+# 然后在 src/global/ 目录下创建 JavaScript 文件
 ```
 
 ### 构建项目
