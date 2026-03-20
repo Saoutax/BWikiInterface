@@ -1,4 +1,4 @@
-# Efficient Interface - BWiki 界面代码库
+# BWiki Interface - BWiki 界面代码库
 
 一个用于 BWiki（MediaWiki）的界面代码构建和部署工具。支持代码编译、小工具定义生成和 Github Actions 自动化部署。
 
