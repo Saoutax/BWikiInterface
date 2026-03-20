@@ -9,7 +9,7 @@ on:
     workflow_dispatch:
 
 env:
-    API_USER_AGENT: ${{ secrets.USERAGENT }}
+    USERAGENT: ${{ secrets.USERAGENT }}
     SESSDATA: ${{ secrets.SESSDATA }}
 
 jobs:
