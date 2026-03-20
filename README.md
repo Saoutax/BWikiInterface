@@ -130,6 +130,10 @@ mkdir src\global
 # 然后在 src/global/ 目录下创建 JavaScript 文件
 ```
 
+### 示例
+
+本仓库中的 `src` 文件夹已包含简单示例，部署前应将其删除。
+
 ### 构建项目
 
 ```bash

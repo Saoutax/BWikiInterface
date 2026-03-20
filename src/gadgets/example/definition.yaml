@@ -1,0 +1,18 @@
+ResourceLoader: true
+
+hidden: false
+
+default: true
+
+type: general
+
+rights:
+    - delete
+
+dependencies: []
+
+enable: true
+
+files:
+    - example.js
+    - example.css
