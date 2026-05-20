@@ -73,6 +73,67 @@ const isGadgetEntryFile = (file: string) => {
     return /^Gadget-.*\.(js|ts|css)$/.test(name);
 };
 
+const buildWidgets = async () => {
+    const dirs = await FastGlob('widgets/*', {
+        cwd: SRC_DIR,
+        absolute: true,
+        onlyDirectories: true,
+    });
+
+    await mkdir(resolve(DIST_DIR, 'widgets'), { recursive: true });
+
+    await Promise.all(
+        dirs.map(async dir => {
+            const name = basename(dir);
+            const entryName = `Widget-${name}`;
+            const varName = `wg${name}`;
+
+            let output = '';
+
+            try {
+                const desc = await readFile(resolve(dir, 'description.wikitext'), 'utf-8');
+                output += `<noinclude>${desc.trimEnd()}</noinclude>`;
+            } catch { /* optional */ }
+
+            let inner = '';
+
+            const cssFile = resolve(dir, `${entryName}.css`);
+            try {
+                const source = await readFile(cssFile);
+                const { code } = transform({
+                    filename: cssFile,
+                    code: Buffer.from(source),
+                    minify: true,
+                    sourceMap: false,
+                });
+                inner += `<styles>\n${code}\n</styles>`;
+            } catch { /* optional */ }
+
+            let jsCode: string | null = null;
+            try {
+                const { code } = await transformFile(resolve(dir, `${entryName}.ts`));
+                jsCode = code;
+            } catch {
+                try {
+                    const { code } = await transformFile(resolve(dir, `${entryName}.js`));
+                    jsCode = code;
+                } catch { /* optional */ }
+            }
+            if (jsCode) {
+                inner += `<scripts>\n${jsCode.trimEnd()}\n</scripts>`;
+            }
+
+            if (!inner) {
+                return;
+            }
+
+            output += `<includeonly><!--{if !isset($${varName}) || !$${varName}}--><!--{assign var="${varName}" value=true scope="global"}-->${inner}<!--{/if}--></includeonly>`;
+
+            await writeFile(resolve(DIST_DIR, 'widgets', entryName), output, 'utf-8');
+        }),
+    );
+};
+
 const build = async () => {
     await rm(DIST_DIR, { recursive: true, force: true });
     await mkdir(resolve(DIST_DIR, 'gadgets'), { recursive: true });
@@ -86,6 +147,7 @@ const build = async () => {
         processFiles('global/*.js', 'global', transpileJs),
         processFiles('global/*.ts', 'global', transpileTs, undefined, '.js'),
         processFiles('global/*.css', 'global', transpileCss),
+        buildWidgets(),
     ]);
 };
 

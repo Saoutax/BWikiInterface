@@ -11,7 +11,7 @@ const contentHash = async (): Promise<contentHashObj> => {
         paths.map(async file => {
             const content = (await readFile(file, 'utf-8')).trim(),
                 { base } = parse(file),
-                prefix = 'MediaWiki:',
+                prefix = file.replace(/\\/g, '/').startsWith('dist/widgets/') ? 'Widget:' : 'MediaWiki:',
                 fullName = prefix + base,
                 hash = sha256(content).toString();
             return {
