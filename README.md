@@ -20,9 +20,14 @@ efficient-interface/
 │   │   └── [gadget-name]/        # 每个小工具独立目录
 │   │       ├── definition.yaml   # 小工具定义文件
 │   │       └── Gadget-[name].js  # 小工具主文件
-│   └── global/                   # 全局脚本
-│       └── *.js                  # 全局 JavaScript 文件
-│       └── *.css                 # 全局 CSS 文件
+│   ├── global/                   # 全局脚本
+│   │   ├── *.js                  # 全局 JavaScript 文件
+│   │   └── *.css                 # 全局 CSS 文件
+│   └── widgets/                  # Widget 代码
+│       └── [widget-name]/        # 每个 Widget 独立目录
+│           ├── Widget-[name].js   # Widget JavaScript 文件（可选）
+│           ├── Widget-[name].css  # Widget CSS 文件（可选）
+│           └── description.wikitext  # 介绍文本（可选）
 ├── dist/                         # 构建输出目录（自动生成）
 ├── scripts/                      # 构建和部署脚本
 │   ├── build/                    # 构建相关脚本
@@ -119,16 +124,62 @@ console.log('MyGadget loaded!');
 
 ### 创建全局脚本
 
-与小工具类似，但应于`src/global/` 目录下按目标页面名称直接创建文件（例如 `Group-sysop.js`）：
+在 `src/global/` 目录下按目标页面名称直接创建文件。
+
+例如 `Common.js`：
+
+```javascript
+// 全局脚本代码
+console.log('Global script loaded!');
+```
+
+`Common.css`：
+
+```css
+body {
+    font-family: sans-serif;
+}
+```
+
+全局脚本会按 MediaWiki 页面名称（`MediaWiki:Common.js`、`MediaWiki:Common.css`）部署。
+
+### 创建 Widget
+
+在 `src/widgets/` 目录下创建 Widget 目录：
 
 ```bash
-# Windows - 创建目录（如果不存在）
-mkdir src\global
-# 然后在 src\global\ 目录下创建 JavaScript 文件
+# Windows
+mkdir src\widgets\MyWidget
+# Linux/macOS
+# mkdir -p src/widgets/MyWidget
+```
 
-# Linux/macOS - 创建目录（如果不存在）
-# mkdir -p src/global
-# 然后在 src/global/ 目录下创建 JavaScript 文件
+每个 Widget 包含以下可选文件，构建时会合并为单个文件：
+
+```javascript
+// src/widgets/MyWidget/Widget-MyWidget.js
+console.log('Widget loaded!');
+```
+
+```css
+/* src/widgets/MyWidget/Widget-MyWidget.css */
+.my-widget { color: red; }
+```
+
+```wikitext
+<!-- src/widgets/MyWidget/description.wikitext -->
+这是 MyWidget 的介绍文本。
+```
+
+构建后的文件将部署到 `Widget:Widget-MyWidget` 页面，输出格式示例：
+
+```wikitext
+<noinclude>这是 MyWidget 的介绍文本。</noinclude><includeonly><!--{if !isset($wgMyWidget) || !$wgMyWidget}--><!--{assign var="wgMyWidget" value=true scope="global"}--><styles>
+.my-widget{color:red}
+</styles><scripts>
+"use strict";
+console.log('Widget loaded!');
+</scripts><!--{/if}--></includeonly>
 ```
 
 ### 示例
@@ -141,7 +192,10 @@ mkdir src\global
 pnpm run build
 ```
 
-构建完成后，代码将输出到 `dist/` 目录，同时生成 `dist/gadgets/Gadgets-definition` 文件。
+构建完成后，代码将输出到 `dist/` 目录：
+- `dist/gadgets/` — 小工具代码，附带 `Gadgets-definition` 定义文件
+- `dist/global/` — 全局脚本和样式
+- `dist/widgets/` — Widget 单文件（合并 JS、CSS 和介绍文本）
 
 ### 部署到 BWiki
 
