@@ -98,8 +98,8 @@ rights:
 dependencies: []
 enable: true
 files:
-    - MyGadget.js
-    - MyGadget.css
+    - Gadget-MyGadget.js
+    - Gadget-MyGadget.css
 ```
 
 3. 创建小工具主文件 `src/gadgets/MyGadget/Gadget-MyGadget.js`：
