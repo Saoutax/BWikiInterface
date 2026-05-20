@@ -14,5 +14,5 @@ dependencies: []
 enable: true
 
 files:
-    - example.js
-    - example.css
+    - Gadget-example.js
+    - Gadget-example.css

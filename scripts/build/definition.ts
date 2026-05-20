@@ -78,7 +78,7 @@ const parseDefinitions = (definitions: Array<GadgetSetting>) => {
             return [];
         });
 
-        const files = option.files.join('|');
+        const files = option.files.map(file => file.replace(/^Gadget-/, '')).join('|');
 
         result[name] = `* ${name}[${parts.join('|')}]|${files}`;
     }

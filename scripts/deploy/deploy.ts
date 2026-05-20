@@ -1,8 +1,9 @@
 import { Mwn } from 'mwn';
 import { SESSDATA, apiUrl, userAgent } from '.././config';
 import { contentHash, needDeploy } from './utils';
+import 'dotenv/config';
 
-const deploy = async () => {
+const deploy = async (message: string, author: string) => {
     const bot = new Mwn({
         apiUrl,
         userAgent,
@@ -22,15 +23,17 @@ const deploy = async () => {
     const oldDeploy = await oldDeploymentJson(),
         currentDeploy = await contentHash(),
         deployment = needDeploy(oldDeploy, currentDeploy);
+
+    const summary = `Git commit${message ? `: ${message}, authored by ${author}` : ''}`;
     await bot.batchOperation(Object.entries(deployment), async ([title, content]) =>
-        bot.save(title, content, 'Git commit', { bot: true }),
+        bot.save(title, content, summary, { bot: true, tags: 'Bot' }),
     );
     await bot.save(
         'MediaWiki:Deployment.json',
         JSON.stringify(
             Object.fromEntries(Object.entries(currentDeploy).map(([key, { hash }]) => [key, hash])),
         ),
-        'Update deployment status',
+        summary,
         {
             bot: true,
         },
