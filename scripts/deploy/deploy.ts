@@ -26,7 +26,7 @@ const deploy = async (message: string, author: string) => {
 
     const summary = `Git commit${message ? `: ${message}, authored by ${author}` : ''}`;
     await bot.batchOperation(Object.entries(deployment), async ([title, content]) =>
-        bot.save(title, content, summary, { bot: true, tags: 'Bot' }),
+        bot.save(title, content, summary, { bot: true }),
     );
     await bot.save(
         'MediaWiki:Deployment.json',
